@@ -22,7 +22,7 @@ class puppet_agent_ld_library_path(
       $real_exe       = "/opt/puppetlabs/bin/${target}"
 
       if $wrapper_dir == '/usr/local/bin' {
-        if ! $puppet_enterprise::profile::agent::manage_symlinks and $ensure {
+        if $ensure {
           # we can only make our changes once the above node group change has been
           # made or we get an error - so wait it out...
           File <| title == $wrapper_script |> {

@@ -86,7 +86,10 @@ describe 'puppet_agent_ld_library_path' do
     ]
     it {
       targets.each { |target|
-        should_not contain_file(target)
+        # check we get the PE default declaration
+        should contain_file(target).with({
+          'ensure' => 'link'
+        })
       }
     }
   end
@@ -125,7 +128,9 @@ describe 'puppet_agent_ld_library_path' do
     ]
     it {
       targets.each { |target|
-        should_not contain_file(target)
+        should contain_file(target).with({
+          'ensure' => 'link'
+        })
       }
     }
   end
@@ -148,7 +153,9 @@ describe 'puppet_agent_ld_library_path' do
     ]
     it {
       targets.each { |target|
-        should_not contain_file(target)
+        should contain_file(target).with({
+          'ensure' => 'file'
+        })
       }
     }
   end

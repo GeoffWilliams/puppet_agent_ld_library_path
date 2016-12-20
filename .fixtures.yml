@@ -2,6 +2,6 @@ fixtures:
   forge_modules:
     puppet_enterprise:
       repo: 'geoffwilliams-puppet_enterprise'
-      ref: '0.5.2'
+      ref: '0.5.3'
   symlinks:
     "puppet_agent_ld_library_path": "#{source_dir}"
