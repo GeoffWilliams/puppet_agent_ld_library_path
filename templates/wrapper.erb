@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# Wrapper script to unset LD_LIBRARY_PATH to address PA-437
+echo "Warning:  Running via wrapper script at <%= @wrapper_script %> to workaround PA-437"
+LD_LIBRARY_PATH= <%= @real_exe %> $@

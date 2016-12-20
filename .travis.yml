@@ -1,0 +1,12 @@
+---
+sudo: false
+language: ruby
+cache: bundler
+before_install:
+  - gem update bundler
+script: "bundle exec rake spec SPEC_OPTS='--format documentation'"
+rvm:
+  - 2.1.9
+env:
+  matrix:
+  - PUPPET_GEM_VERSION="~> 4.7.0"
