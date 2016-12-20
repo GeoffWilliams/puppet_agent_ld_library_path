@@ -31,9 +31,9 @@ This module is useful when:
 
 ### What puppet_agent_ld_library_path affects
 
-Installs wrapper scripts under `/usr/local/bin` or at a user specified location for the above puppet executables.  Can also remove the wrappers if required, replacing them with the symlinks that the puppet installer usually creates.
+Installs wrapper scripts under `/usr/local/bin` or at a user specified location for the above puppet executables.  When the module is not being applied, the built-in `puppet_enterprise` module will take over ownership of the wrapper files under `/usr/local/bin` and will immediately restore the system as-shipped.  If an alternate directory is used, you can pass `ensure => false` to clean up this directory if required.
 
-This module addresses [PA-437](https://tickets.puppetlabs.com/browse/PA-437).  When this issue is addressed in-product, you should reset your systems to their original states by instructing this puppet module to remove itself.  Once agent changes have been revoked, this module can be removed from your systems entirely.
+This module addresses [PA-437](https://tickets.puppetlabs.com/browse/PA-437).  When this issue is addressed in-product, you should reset your systems to their original states by removing this module from your Puppet Masters.
 
 ## Usage
 
@@ -43,16 +43,20 @@ include puppet_agent_ld_library_path
 ```
 
 ### Removing the wrapper scripts from /usr/local/bin
-```puppet
-class { 'puppet_agent_ld_library_path':
-  ensure => false,
-}
-```
-This will replace the wrappers with the original symlinks
+_No code required, just make sure the `puppet_agent_ld_library_path` class is no longer present in your classification data_
+
 
 ### Install wrapper scripts to an alternate location
 ```puppet
 class { 'puppet_agent_ld_library_path':
+  wrapper_dir => '/place/to/install',
+}
+```
+
+## Remove wrapper scripts from an alternate location
+```puppet
+class { 'puppet_agent_ld_library_path':
+  ensure      => false,
   wrapper_dir => '/place/to/install',
 }
 ```
@@ -63,7 +67,7 @@ class { 'puppet_agent_ld_library_path':
   apply_os_family => ['AIX', 'Solaris'],
 }
 ```
-Note: Parameter values are case sensitive
+Note: Parameter values are case sensitive.  This example would attempt to fix AIX and Solaris systems.
 
 
 ## Reference
