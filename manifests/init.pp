@@ -13,7 +13,7 @@ class puppet_agent_ld_library_path(
 ) {
   # include puppet_enterprise::profile::agent
   $targets = [
-    'puppet', 'facter', 'pe-man', 'hiera'
+    'puppet', 'facter', 'hiera'
   ]
 
   if $osfamily in $apply_os_family {

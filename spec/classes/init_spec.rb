@@ -37,7 +37,6 @@ describe 'puppet_agent_ld_library_path' do
     targets = [
       '/usr/local/bin/puppet',
       '/usr/local/bin/facter',
-      '/usr/local/bin/pe-man',
       '/usr/local/bin/hiera',
     ]
     it {
@@ -59,7 +58,6 @@ describe 'puppet_agent_ld_library_path' do
     targets = [
       '/zzz/puppet',
       '/zzz/facter',
-      '/zzz/pe-man',
       '/zzz/hiera',
     ]
     it {
@@ -81,7 +79,6 @@ describe 'puppet_agent_ld_library_path' do
     targets = [
       '/usr/local/bin/puppet',
       '/usr/local/bin/facter',
-      '/usr/local/bin/pe-man',
       '/usr/local/bin/hiera',
     ]
     it {
@@ -104,7 +101,6 @@ describe 'puppet_agent_ld_library_path' do
     targets = [
       '/zzz/puppet',
       '/zzz/facter',
-      '/zzz/pe-man',
       '/zzz/hiera',
     ]
     it {
@@ -123,7 +119,6 @@ describe 'puppet_agent_ld_library_path' do
     targets = [
       '/usr/local/bin/puppet',
       '/usr/local/bin/facter',
-      '/usr/local/bin/pe-man',
       '/usr/local/bin/hiera',
     ]
     it {
@@ -148,7 +143,6 @@ describe 'puppet_agent_ld_library_path' do
     targets = [
       '/usr/local/bin/puppet',
       '/usr/local/bin/facter',
-      '/usr/local/bin/pe-man',
       '/usr/local/bin/hiera',
     ]
     it {

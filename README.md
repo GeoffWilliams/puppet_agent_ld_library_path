@@ -19,7 +19,6 @@ This module provides a method to install or remove a wrapper script to unset `LD
 
 * puppet
 * facter
-* pe-man
 * hiera
 
 This module is useful when:
@@ -36,6 +35,9 @@ Installs wrapper scripts under `/usr/local/bin` or at a user specified location 
 This module addresses [PA-437](https://tickets.puppetlabs.com/browse/PA-437).  When this issue is addressed in-product, you should reset your systems to their original states by removing this module from your Puppet Masters.
 
 ## Usage
+Probably the simplest way to use this module is to create a classification group matching all nodes and then include the `puppet_agent_ld_library_path` class.  When the module is no longer needed, remove the classification group, and then optionally the module.
+
+Alternatively, the following code snipits can be added to your roles and profiles as required.
 
 ### Install wrapper scripts into /usr/local/bin
 ```puppet
@@ -85,7 +87,6 @@ Note: Parameter values are case sensitive.  This example would attempt to fix AI
 * Requires BASH
 * Takes over ownership of the files (unless alternate directory specified):
   * `/usr/local/bin/puppet`
-  * `/usr/local/bin/pe-man`
   * `/usr/local/bin/hiera`
   * `/usr/local/bin/facter`
 * Needs to be removed from all systems when [PA-437]( https://tickets.puppetlabs.com/browse/PA-437) addressed in-product
