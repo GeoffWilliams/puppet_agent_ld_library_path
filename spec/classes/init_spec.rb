@@ -152,30 +152,4 @@ describe 'puppet_agent_ld_library_path' do
       }
     }
   end
-
-  context 'classifies master when ensure=>true' do
-    it { should contain_node_group('PE Agent').with({
-      'classes' => {'puppet_enterprise::profile::agent' => {'manage_symlinks' => false}},
-    })}
-  end
-
-  context 'removes classification from master when ensure=>false' do
-    let :params do
-      {
-        'ensure' => false,
-      }
-    end
-    it { should contain_node_group('PE Agent').with({
-      'classes' => {'puppet_enterprise::profile::agent' => {'manage_symlinks' => true}},
-    })}
-  end
-
-  context 'does not classify on agents' do
-    let :facts do
-      # have set the fact to false instead of omiting it becase
-      # rspec tests with strict variables on
-      default_facts.merge({:pe_server_version => false})
-    end
-    it { should_not contain_node_group('PE Agent') }
-  end
 end

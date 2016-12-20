@@ -1,47 +1,11 @@
 # Class: puppet_agent_ld_library_path
 # ===========================
 #
-# Full description of class puppet_agent_ld_library_path here.
+# Install or remove wrappers to run puppet agent with LD_LIBRARY_PATH unset
 #
-# Parameters
-# ----------
-#
-# Document parameters here.
-#
-# * `sample parameter`
-# Explanation of what this parameter affects and what it defaults to.
-# e.g. "Specify one or more upstream ntp servers as an array."
-#
-# Variables
-# ----------
-#
-# Here you should define a list of variables that this module would require.
-#
-# * `sample variable`
-#  Explanation of how this variable affects the function of this class and if
-#  it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#  External Node Classifier as a comma separated list of hostnames." (Note,
-#  global variables should be avoided in favor of class parameters as
-#  of Puppet 2.6.)
-#
-# Examples
-# --------
-#
-# @example
-#    class { 'puppet_agent_ld_library_path':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
-#    }
-#
-# Authors
-# -------
-#
-# Author Name <author@domain.com>
-#
-# Copyright
-# ---------
-#
-# Copyright 2016 Your name here, unless otherwise noted.
-#
+# @param ensure True to install the wrappers otherwise false
+# @param wrapper_dir Optionally set a path for an alternate directory to install wrappers
+# @param apply_os_family Optionall set an array of osfamily to apply on (case sensitive)
 class puppet_agent_ld_library_path(
     $ensure           = true,
     $wrapper_dir      = '/usr/local/bin',
@@ -51,20 +15,6 @@ class puppet_agent_ld_library_path(
   $targets = [
     'puppet', 'facter', 'pe-man', 'hiera'
   ]
-
-  $manage_symlinks = ! $ensure
-  if $pe_server_version {
-    # on the master, also do classification
-
-    node_group { 'PE Agent':
-      ensure               => 'present',
-      classes              => {'puppet_enterprise::profile::agent' => {'manage_symlinks' => $manage_symlinks}},
-      environment          => 'production',
-      override_environment => 'false',
-      parent               => 'PE Infrastructure',
-      rule                 => ['and', ['~', ['fact', 'aio_agent_version'], '.+']],
-    }
-  }
 
   if $osfamily in $apply_os_family {
     $targets.each |$target| {
