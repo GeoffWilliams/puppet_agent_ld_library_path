@@ -9,7 +9,7 @@
 class puppet_agent_ld_library_path(
     $ensure           = true,
     $wrapper_dir      = '/usr/local/bin',
-    $apply_os_family  = ['Solaris'],
+    $apply_os_family  = ['Solaris', 'AIX'],
 ) {
   # include puppet_enterprise::profile::agent
   $targets = [

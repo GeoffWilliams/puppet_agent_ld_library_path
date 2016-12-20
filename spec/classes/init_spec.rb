@@ -134,11 +134,11 @@ describe 'puppet_agent_ld_library_path' do
     let :params do
       {
         :ensure           => true,
-        :apply_os_family  => ['Solaris', 'AIX'],
+        :apply_os_family  => ['Solaris', 'AIX', 'RedHat'],
       }
     end
     let :facts do
-      default_facts.merge({:osfamily => 'AIX'})
+      default_facts.merge({:osfamily => 'RedHat'})
     end
     targets = [
       '/usr/local/bin/puppet',
