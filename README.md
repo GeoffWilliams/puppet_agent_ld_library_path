@@ -26,6 +26,8 @@ This module is useful when:
 * The Puppet service starts and runs normally
 * You are unable to run puppet manually without specifying or unsetting `LD_LIBRARY_PATH` and you are unable or unwilling to update `root`'s environment variables
 
+The module will only apply itself to the `osfamily`'s passed in the `apply_os_family` parameter.  By default, this includes `Solaris` and `AIX`.
+
 ## Setup
 
 ### What puppet_agent_ld_library_path affects
@@ -66,10 +68,10 @@ class { 'puppet_agent_ld_library_path':
 ### Install wrapper scripts on platforms other then Solaris
 ```puppet
 class { 'puppet_agent_ld_library_path':
-  apply_os_family => ['AIX', 'Solaris'],
+  apply_os_family => ['AIX', 'Solaris', 'RedHat'],
 }
 ```
-Note: Parameter values are case sensitive.  This example would attempt to fix AIX and Solaris systems.
+Note: Parameter values are case sensitive.  This example would attempt to fix AIX and Solaris and 'RedHat' systems.
 
 
 ## Reference
