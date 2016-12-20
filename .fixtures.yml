@@ -1,3 +1,10 @@
 fixtures:
+  forge_modules:
+    node_manager:
+      repo: "WhatsARanjit-node_manager"
+      ref: "0.3.1"
+    puppet_enterprise:
+      repo: 'geoffwilliams-puppet_enterprise'
+      ref: '0.5.2'
   symlinks:
     "puppet_agent_ld_library_path": "#{source_dir}"

@@ -47,35 +47,55 @@ class puppet_agent_ld_library_path(
     $wrapper_dir      = '/usr/local/bin',
     $apply_os_family  = ['Solaris'],
 ) {
+  # include puppet_enterprise::profile::agent
   $targets = [
     'puppet', 'facter', 'pe-man', 'hiera'
   ]
+
+  $manage_symlinks = ! $ensure
+  if $pe_server_version {
+    # on the master, also do classification
+
+    node_group { 'PE Agent':
+      ensure               => 'present',
+      classes              => {'puppet_enterprise::profile::agent' => {'manage_symlinks' => $manage_symlinks}},
+      environment          => 'production',
+      override_environment => 'false',
+      parent               => 'PE Infrastructure',
+      rule                 => ['and', ['~', ['fact', 'aio_agent_version'], '.+']],
+    }
+  }
 
   if $osfamily in $apply_os_family {
     $targets.each |$target| {
       $wrapper_script = "${wrapper_dir}/${target}"
       $real_exe       = "/opt/puppetlabs/bin/${target}"
 
-      if $ensure {
+      if $wrapper_dir == '/usr/local/bin' {
+        if ! $puppet_enterprise::profile::agent::manage_symlinks and $ensure {
+          # we can only make our changes once the above node group change has been
+          # made or we get an error - so wait it out...
+          File <| title == $wrapper_script |> {
+            ensure  => file,
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0755',
+            target  => undef,
+            content => template('puppet_agent_ld_library_path/wrapper.erb'),
+            require => undef,
+          }
+        }
+      } else {
+        $_ensure = $ensure ? {
+          true  => 'file',
+          false => 'absent'
+        }
         file { $wrapper_script:
-          ensure  => file,
+          ensure  => $_ensure,
           owner   => 'root',
           group   => 'root',
           mode    => '0755',
           content => template('puppet_agent_ld_library_path/wrapper.erb'),
-        }
-      } else {
-        if $wrapper_dir == '/usr/local/bin' {
-          file { $wrapper_script:
-            ensure  => link,
-            target  => $real_exe,
-            owner   => 'root',
-            group   => 'root',
-          }
-        } else {
-          file { $wrapper_script:
-            ensure => absent,
-          }
         }
       }
     }
