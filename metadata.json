@@ -1,6 +1,6 @@
 {
   "name": "geoffwilliams-puppet_agent_ld_library_path",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "author": "geoffwilliams",
   "summary": "Puppet module to install a wrapper to run puppet agent with LD_LIBRARY_PATH unset",
   "license": "Apache-2.0",
