@@ -92,6 +92,7 @@ Note: Parameter values are case sensitive.  This example would attempt to fix AI
   * `/usr/local/bin/hiera`
   * `/usr/local/bin/facter`
 * Needs to be removed from all systems when [PA-437]( https://tickets.puppetlabs.com/browse/PA-437) addressed in-product
+* `/usr/local/bin` directory must already exist
 
 ## Development
 

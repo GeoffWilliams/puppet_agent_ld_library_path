@@ -16,6 +16,11 @@ class puppet_agent_ld_library_path(
     'puppet', 'facter', 'hiera'
   ]
 
+  $group = $osfamily ? {
+    'AIX'   => 'system',
+    default => 'root'
+  }
+
   if $osfamily in $apply_os_family {
     $targets.each |$target| {
       $wrapper_script = "${wrapper_dir}/${target}"
@@ -23,12 +28,12 @@ class puppet_agent_ld_library_path(
 
       if $wrapper_dir == '/usr/local/bin' {
         if $ensure {
-          # we can only make our changes once the above node group change has been
-          # made or we get an error - so wait it out...
+          # Collect and override the symlink file resources that were created
+          # by the puppet_enterprise module
           File <| title == $wrapper_script |> {
             ensure  => file,
             owner   => 'root',
-            group   => 'root',
+            group   => $group,
             mode    => '0755',
             target  => undef,
             content => template('puppet_agent_ld_library_path/wrapper.erb'),
@@ -43,7 +48,7 @@ class puppet_agent_ld_library_path(
         file { $wrapper_script:
           ensure  => $_ensure,
           owner   => 'root',
-          group   => 'root',
+          group   => $group,
           mode    => '0755',
           content => template('puppet_agent_ld_library_path/wrapper.erb'),
         }
